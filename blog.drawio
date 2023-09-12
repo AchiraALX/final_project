@@ -1,0 +1,46 @@
+<mxfile host="65bd71144e">
+    <diagram id="0cS9NLMTSm4y7jWtFrUY" name="Page-1">
+        <mxGraphModel dx="884" dy="922" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry width="850" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry y="80" width="850" height="960" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry y="1040" width="850" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="Logo" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="10" y="10" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="Prof" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="710" y="10" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="Info" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="580" y="10" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="Copyright" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="20" y="1040" width="340" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="Blog" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="130" y="120" width="590" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="Blog" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="140" y="330" width="590" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="Blog" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="140" y="550" width="590" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="Blog" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="130" y="790" width="590" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="Social links" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="670" y="1040" width="120" height="60" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

@@ -20,8 +20,8 @@ The Chat Application is a real-time messaging platform that provides users and b
 - **Backend**: Quart (Python)
 - **Frontend**: HTML, CSS, Vanilla JavaScript
 - **TUI (Textual)**: [Optional]
-- **Database**: [Choose SQL or NoSQL as appropriate]
-- **Deployment**: [Specify your deployment platform]
+- **Database**: [SQL and MongoDB]
+- **Deployment**: [Github]
 
 ## Installation
 
