@@ -10,12 +10,15 @@ from quart import (
 )
 from views.chat_routes import chat_route
 from api.api import api
+from auth.login import login
+
 from typing import Tuple
 
 chat = Quart(__name__)
 
 chat.register_blueprint(chat_route, url_prefix='/chat')
 chat.register_blueprint(api, url_prefix='/api')
+chat.register_blueprint(login, url_prefix='/auth')
 
 
 @chat.route('/', strict_slashes=False)

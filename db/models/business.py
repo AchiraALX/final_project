@@ -4,26 +4,46 @@
 """
 
 from db.models.base import Base
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from db.models.blog import Blog
+from sqlalchemy import String, ForeignKey
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 
-class Storage:
-    """Structure database
+class Business(Base):
+    """Business profile
     """
 
-    def __init__(self, db_name: str) -> None:
-        self.engine = create_engine(f'sqlite://{db_name}')
+    __tablename__ = 'business'
 
-        Base.metadata.drop_all(self.engine)
-        Base.metadata.create_all(self.engine)
+    name: Mapped[str] = mapped_column(
+        String(100),
+        nullable=False
+    )
 
-    @property
-    def new_session(self):
-        """Return a new session
-        """
+    region: Mapped[str] = mapped_column(
+        String(100),
+        nullable=False
+    )
 
-        return sessionmaker(bind=self.engine)
+    # Foreign Keys
+    owner: Mapped[str] = mapped_column(
+        ForeignKey('users.username'),
+        nullable=False
+    )
+
+    # Relationships
+    blogs: Mapped[str] = relationship(
+        Blog,
+        back_populates='business_blogs',
+        uselist=True,
+        cascade='all, delete, delete-orphan'
+    )
+
+    user_business = relationship(
+        'User',
+        back_populates='business',
+        cascade='all, delete, delete-orphan'
+    )
 
     def __repr__(self) -> str:
-        return "I am the database handler for the SQL"
+        return f"(<name: {self.name}>)\n--> Owner: {self.owner}"

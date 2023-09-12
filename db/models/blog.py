@@ -3,12 +3,12 @@
 """Blog model
 """
 
-from sqlalchemy import String, Text
+from sqlalchemy import String, Text, ForeignKey
 from sqlalchemy.orm import (
     Mapped,
-    mapped_column
+    mapped_column,
+    relationship
 )
-
 from db.models.base import Base
 
 
@@ -26,8 +26,21 @@ class Blog(Base):
         Text(50000)
     )
     author: Mapped[str] = mapped_column(
-        String(100),
+        ForeignKey('users.username' or 'business.name'),
         nullable=False
+    )
+
+    # Relationships
+    user_blogs = relationship(
+        'User',
+        back_populates='blogs',
+        cascade='all, delete, delete-orphan'
+    )
+
+    business_blogs = relationship(
+        'Business',
+        back_populates='blogs',
+        cascade='all, delete, delete-orphan'
     )
 
     def __repr__(self) -> str:

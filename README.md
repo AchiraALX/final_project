@@ -84,7 +84,7 @@ This project is licensed under the [MIT License] License - see the [LICENSE](LIC
 
 ## Contact
 
-If you have any questions or feedback, please contact [Your Name] at [ed127720@students.mu.ac.ke].
+If you have any questions or feedback, please contact Jacob at [ed127720@students.mu.ac.ke].
 
 ---
 
