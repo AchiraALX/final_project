@@ -34,12 +34,14 @@ class User(Base):
 
     password_reset_token: Mapped[str] = mapped_column(
         String(100),
-        default=None
+        default=None,
+        nullable=True
     )
 
     session_token: Mapped[str] = mapped_column(
         String(100),
-        default=None
+        default=None,
+        nullable=True
     )
 
     # Relationships

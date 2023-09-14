@@ -8,22 +8,7 @@ from tests.workers.worker_test import WorkerTest
 from tests.database.test_storage import SQLTest
 from tests.api.api_test import APITest
 from tests.auth.auth_test import AuthTest
-
-
-def create_test_suite():
-    """Create a test suite to run tests
-    """
-
-    suite = unittest.TestSuite()
-    loader = unittest.TestLoader()
-
-    # Add classes to th suite
-    suite.addTest(loader.loadTestsFromTestCase(WorkerTest))
-    suite.addTest(loader.loadTestsFromTestCase(SQLTest))
-    suite.addTest(loader.loadTestsFromTestCase(APITest))
-    suite.addTest(loader.loadTestsFromTestCase(AuthTest))
-
-    return suite
+from tests.chat.chat_tests import ChatTest
 
 
 class WTest(WorkerTest):
@@ -58,10 +43,22 @@ class TestAPI(APITest):
 
 class TestAuth(AuthTest):
     """Test cases for the Authentication
+
+    Find the test file at /test/aut/auth_test.py
     """
 
     def __str__(self) -> str:
         return "These are est cases for the Auth system"
+
+
+class TestChat(ChatTest):
+    """Test cases for the chat routes
+
+    Find the test file at /test/chat/chat_test.py
+    """
+
+    def __str__(self) -> str:
+        return "These are test for the app routes"
 
 
 if __name__ == "__main__":

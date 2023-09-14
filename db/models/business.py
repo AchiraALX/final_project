@@ -36,13 +36,11 @@ class Business(Base):
         Blog,
         back_populates='business_blogs',
         uselist=True,
-        cascade='all, delete, delete-orphan'
     )
 
     user_business = relationship(
         'User',
         back_populates='business',
-        cascade='all, delete, delete-orphan'
     )
 
     def __repr__(self) -> str:

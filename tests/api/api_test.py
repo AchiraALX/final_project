@@ -17,11 +17,11 @@ class APITest(unittest.TestCase):
         """Test the home page
         """
 
-        self.assertTrue(requests.get(self.api_home_uri).status_code, 200)
+        self.assertEqual(requests.get(self.api_home_uri).status_code, 200)
 
     def test_api_get_users(self):
         """Test for the getting users route
         """
 
-        self.assertTrue(requests.get(
+        self.assertEqual(requests.get(
             self.api_home_uri + 'get_users').status_code, 200)

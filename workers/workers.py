@@ -4,12 +4,10 @@
 """
 
 from db.storage import Storage
-from db.graph_queries import Query
-from graphene import Schema
 from typing import Generator
-from custom.exceptions.exceptions import GraphQueryError
-
-schema = Schema(query=Query)
+import json
+from db.models.user import User
+from db.models.blog import Blog
 
 
 def _sum(a: int | float, b: int | float) -> int | float:
@@ -22,42 +20,29 @@ def _sum(a: int | float, b: int | float) -> int | float:
     return a + b
 
 
-def get_users():
-    """Retrieve users from the database
+def get_user_by(email: str) -> Generator:
+    """Get one user
     """
 
-    yield {
-        'users': [
-            {
-                'name': 'John Doe',
-                'email': 'ed127720@student.mu.ac.ke'
-            },
-            {
-                'name': 'Jane',
-                'email': 'acitrajacobs@gmail.com'
-            },
-            {
-                'name': 'Jack',
-                'email': 'jack@gmail.com'
-            },
-            {
-                'name': 'Jill',
-                'email': 'biden@gmail.com'
+    for user in all_users():
+        if user.email == email:
+            yield {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email
             }
-        ]
-    }
+
+    yield f"No user with the email specified: {email}"
 
 
-# Execute the graphql query
-def graphql(query) -> Generator:
-    """Execute the graphql query
+def all_users() -> Generator:
+    """Get all users
     """
 
-    result = schema.execute(query)
-    if result.errors:
-        raise GraphQueryError
+    users = Storage('test').new_session.query(User).all()
 
-    yield result.data.__dict__
+    for user in users:
+        yield user
 
 
 if __name__ == "__main__":

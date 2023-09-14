@@ -26,21 +26,25 @@ class Blog(Base):
         Text(50000)
     )
     author: Mapped[str] = mapped_column(
-        ForeignKey('users.username' or 'business.name'),
-        nullable=False
+        ForeignKey('users.username'),
+        nullable=False,
+        default=None
+    )
+    business_name: Mapped[str] = mapped_column(
+        ForeignKey('business.name'),
+        nullable=False,
+        default=None
     )
 
     # Relationships
     user_blogs = relationship(
         'User',
         back_populates='blogs',
-        cascade='all, delete, delete-orphan'
     )
 
     business_blogs = relationship(
         'Business',
         back_populates='blogs',
-        cascade='all, delete, delete-orphan'
     )
 
     def __repr__(self) -> str:

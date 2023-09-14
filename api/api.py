@@ -3,8 +3,9 @@
 """Main API
 """
 
-from quart import Blueprint, render_template
-from workers.workers import get_users
+from quart import Blueprint, render_template, request
+from workers.workers import all_users
+from custom.queries.graph_queries import min_user
 
 
 api = Blueprint("api", __name__)
@@ -18,9 +19,9 @@ async def api_main():
     return await render_template('api.html')
 
 
-@api.route('/get_users')
+@api.route('/get_users', strict_slashes=False, methods=['GET'])
 async def get_users_():
     """Retrieve users from the database
     """
 
-    return get_users().__next__()
+    return all_users(min_user).__next__()

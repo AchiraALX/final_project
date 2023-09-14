@@ -1,10 +1,9 @@
 # Empty strings Error
-class StringNotFoundError(Exception):
+class StringEmptyError(Exception):
     """Empty strings exception"""
 
-    def __init__(self, message):
-        self.message = message
-        super().__init__(self.message)
+    def __init__(self, *args: object):
+        super().__init__(*args)
 
     def __str__(self) -> str:
         return "Empty string error"

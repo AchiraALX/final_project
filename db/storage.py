@@ -5,12 +5,12 @@
 
 from db.models.base import Base
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, Session
 from db.models.blog import Blog
 from db.models.business import Business
 from db.models.user import User
 from sqlalchemy.exc import NoResultFound
-from custom.exceptions.exceptions import StringNotFoundError
+from custom.exceptions.exceptions import StringEmptyError
 
 
 class Storage:
@@ -26,10 +26,9 @@ class Storage:
     def __init__(self, database: str) -> None:
         self.__engine = create_engine(f"sqlite:///db/{database}.sqlite3")
 
-        Base.metadata.drop_all(self.__engine)
         Base.metadata.create_all(self.__engine)
 
-        self.__session = sessionmaker(bind=self.__engine)
+        self.__session = Session(bind=self.__engine)
 
     @property
     def new_session(self):
@@ -50,7 +49,7 @@ class Storage:
             case _:
                 obj = None
 
-        session = self.new_session()
+        session = self.new_session
         if obj is not None:
             session.add(obj)
             session.commit()
@@ -62,9 +61,9 @@ class Storage:
         """
 
         if not filter_id or not model:
-            raise StringNotFoundError("Empty entry")
+            raise StringEmptyError
 
-        session = self.new_session()
+        session = self.new_session
         try:
             session.query(self.available_models[model]).filter_by(
                 **filter_id).delete()
@@ -81,9 +80,9 @@ class Storage:
         """
 
         if not filter_id or not model:
-            raise StringNotFoundError("Empty entry")
+            raise StringEmptyError
 
-        session = self.new_session()
+        session = self.new_session
         try:
             session.query(self.available_models[model]).filter_by(
                 **filter_id).update(**data)
@@ -94,6 +93,33 @@ class Storage:
 
         finally:
             session.close()
+
+    def get_object(self, filter_id: dict, model: str) -> object:
+        """Retrieve object from database
+        """
+        session = self.new_session
+        try:
+            obj = session.query(self.available_models[model]).filter_by(
+                **filter_id
+            ).first()
+
+            if obj is None:
+                return "Purely none"
+
+        except NoResultFound:
+            raise NoResultFound('No entries available at the moment')
+
+    def get_user_by(self, filters: dict) -> object:
+        """Get a single user
+        """
+
+        session = self.new_session
+        user = session.query(User).filter_by(**filters).first()
+
+        if user is None:
+            return 'Purely user empty'
+
+        return ""
 
     def __repr__(self) -> str:
         return f"(<Database engine at: {self.__engine}>)"

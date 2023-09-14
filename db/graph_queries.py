@@ -15,6 +15,8 @@ from graphene import (
 )
 from typing import Generator
 
+storage = Storage('test')
+
 
 class BusinessType(ObjectType):
     """Business model graphene object type
@@ -53,25 +55,24 @@ class Query(ObjectType):
     users = List(UserType)
     blogs = List(BlogType)
     business = List(BusinessType)
-    storage = Storage('test')
 
     def resolve_users(self, info) -> Generator:
         """List of users
         """
 
-        yield self.storage.new_session().query(User).all()
+        yield storage.new_session.query(User).all()
 
     def resolve_blogs(self, info) -> Generator:
         """List of blogs
         """
 
-        yield self.storage.new_session().query(Blog).all()
+        yield storage.new_session.query(Blog).all()
 
     def resolve_business(self, info) -> Generator:
         """List for businesses
         """
 
-        yield self.storage.new_session().query(Business).all()
+        yield storage.new_session.query(Business).all()
 
     def __repr__(self) -> str:
         return "Resolvers"
