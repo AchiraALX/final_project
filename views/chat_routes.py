@@ -5,7 +5,11 @@
 
 from quart import Blueprint, render_template, request
 
-from workers.workers import all_users, get_user_by
+from workers.workers import (
+    all_users,
+    get_user_by,
+    remove_user_self
+)
 from custom.exceptions.exceptions import StringEmptyError
 from custom.queries.graph_queries import min_user
 
@@ -23,18 +27,6 @@ async def chat_route_main():
     """
 
     return await render_template("chat.html")
-
-
-@chat_route.route('/user', strict_slashes=False, methods=['POST'])
-async def my_users() -> dict[str, str] | str | Generator:
-    """Get my users
-    """
-
-    email = (await request.form).get('email')
-
-    user = get_user_by(email=str(email))
-
-    return user.__next__()
 
 
 @chat_route.route('/users', strict_slashes=False, methods=['GET'])
