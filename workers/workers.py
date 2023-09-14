@@ -57,10 +57,12 @@ def users_with_matching_query(query: str) -> Generator:
     users_with_query = []
     for user in all_users():
         if user.email == query or user.username == query:
-            users_with_query.append(user)
+            users_with_query.append({
+                'username': user.username,
+                'email': user.email
+            })
 
-    for user in users_with_query:
-        yield user
+    yield users_with_query
 
 
 def get_user_by(string: str) -> Generator:
@@ -84,7 +86,7 @@ def get_user_by(string: str) -> Generator:
     yield f"No user with the email specified parameter: {string}"
 
 
-def remove_user_self(id: str) -> Generator:
+def remove_user_self(id: str) -> bool:
     """Delete a user from the database
 
     Return:
@@ -94,28 +96,33 @@ def remove_user_self(id: str) -> Generator:
         remove_user_self(id) -> id is the user id
     """
 
-    for user in all_users():
-        if user.id == id or user.username == id:
-            Storage('test').new_session.delete(user)
-            Storage('test').new_session.commit()
-            yield f"User with id: {id} deleted successfully"
+    session = Storage('test').new_session
+    user = session.query(User).filter_by(id=id).first()
 
-    yield f"No user with the id specified parameter: {id}"
+    if user is not None:
+        session.delete(user)
+        session.commit()
+
+        return True
+
+    return False
 
 
-def update_user(data: dict, key: str) -> Generator:
+def update_user(data: dict, id: str) -> bool:
     """Update user that match the specified key
     """
 
-    for user in all_users():
-        if user.id == key or user.username == key:
-            for key, value in data.items():
-                setattr(user, key, value)
-                Storage('test').new_session.commit()
+    session = Storage('test').new_session
+    user = session.query(User).filter_by(id=id).first()
 
-                yield f"Updated user with username: {user.username}"
+    if user is not None:
+        for key, val in data.items():
+            setattr(user, key, val)
+            session.commit()
 
-    yield f"No user with the specified key parameter: {key}"
+        return True
+
+    return False
 
 
 # ----------------------------------------------------------------------------
@@ -151,13 +158,18 @@ def blogs_with_matching_query(query: str) -> Generator:
         blogs_with_matching_query(query) -> query is the blog title or id
     """
 
+    query = query.lower()
+
     blogs_with_query = []
     for blog in all_blogs():
-        if blog.title == query or blog.id == query:
-            blogs_with_query.append(blog)
+        if query in blog.title.lower() or query in blog.content.lower():
+            blogs_with_query.append({
+                'author': blog.author,
+                'title': blog.title,
+                'content': blog.content
+            })
 
-    for blog in blogs_with_query:
-        yield blog
+    yield blogs_with_query
 
 
 def get_blog_by(string: str) -> Generator:
@@ -170,18 +182,20 @@ def get_blog_by(string: str) -> Generator:
         get_blog_by(string) -> string is the blog title or id
     """
 
+    string = string.lower()
+
     for blog in all_blogs():
-        if blog.title == string or blog.id == string:
+        if string in blog.title.lower() or string in blog.content.lower():
             yield {
-                'id': blog.id,
+                'author': blog.author,
                 'title': blog.title,
                 'content': blog.content
             }
 
-    yield f"No blog with the title specified parameter: {string}"
+    yield f"No result for: {string}"
 
 
-def remove_blog_self(id: str) -> Generator:
+def remove_blog_self(id: str) -> bool:
     """Delete a blog from the database
 
     Return:
@@ -191,31 +205,34 @@ def remove_blog_self(id: str) -> Generator:
         remove_blog_self(id) -> id is the blog id
     """
 
-    for blog in all_blogs():
-        if blog.id == id or blog.title == id:
-            Storage('test').new_session.delete(blog)
-            Storage('test').new_session.commit()
-            yield f"Blog with id: {id} deleted successfully"
+    session = Storage('test').new_session
+    blog = session.query(Blog).filter_by(id=id).first()
+    if blog is not None:
+        session.delete(blog)
+        session.commit()
 
-    yield f"No blog with the id specified parameter: {id}"
+        return True
+
+    return False
 
 
-def blog_update(data: dict, key: str) -> bool:
+def update_blog(data: dict, id: str) -> bool:
     """Update the blog with the matching key
 
     Return:
         bool: True if the update went through else False
 
     Usage:
-        blog_update(data, key) -> data is the data to be updated
+        update_blog(data, key) -> data is the data to be updated
         and key is the blog id
     """
+    session = Storage('test').new_session
+    blog = session.query(Blog).filter_by(id=id).first()
+    if blog is not None:
+        for key, val in data.items():
+            setattr(blog, key, val)
+            session.commit()
 
-    for blog in all_blogs():
-        if blog.id == key:
-            blog.title = data['title']
-            blog.content = data['content']
-            Storage('test').new_session.commit()
-            return True
+        return True
 
     return False

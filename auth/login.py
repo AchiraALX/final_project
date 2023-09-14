@@ -68,16 +68,10 @@ async def sign_up() -> str | object | None:
         email = (await request.form).get('email')
         password = (await request.form).get('password')
 
-        try:
-            user = auth.create_user(
-                username=username,
-                email=email,
-                password=password
-            )
-
-        except Exception as e:
-            return str(e)
-
-        return str(user)
+        return auth.create_user(
+            username=username,
+            email=email,
+            password=password
+        )
 
     return await render_template('sign_up.html')

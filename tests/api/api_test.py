@@ -6,6 +6,7 @@
 import unittest
 from api.api import api
 import requests
+from app.main import chat
 
 
 class APITest(unittest.TestCase):
@@ -19,9 +20,11 @@ class APITest(unittest.TestCase):
 
         self.assertEqual(requests.get(self.api_home_uri).status_code, 200)
 
-    def test_api_get_users(self):
+    async def test_api_get_users(self):
         """Test for the getting users route
         """
+
+        response = await chat.test_client().get('/users/test')
 
         self.assertEqual(requests.get(
             self.api_home_uri + 'get_users').status_code, 200)

@@ -62,4 +62,4 @@ async def method_not_allowed(error):
     """Not allowed method handling
     """
 
-    return {'res': 'Not really god at this stuff'}
+    return {'res': '405'}

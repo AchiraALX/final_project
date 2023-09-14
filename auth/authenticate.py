@@ -4,6 +4,9 @@
 """
 
 from db.storage import Storage
+from workers.workers import get_user_by
+
+from typing import Generator
 
 
 class Auth:
@@ -18,26 +21,38 @@ class Auth:
         self.email = kwargs.get('email')
         self.storage = Storage('test')
 
-    def initiated(self) -> dict:
+    def initiated(self) -> Generator:
         """Return a dictionary of the added arguments
         """
 
-        return self.all
+        yield self.all
 
-    def create_user(self, **kwargs) -> None | str | object:
+    def create_user(self, **kwargs) -> None | str | Generator:
         """Create user to database
         """
 
-        details = {
-            'username': kwargs.get('username')
-        }
+        user = get_user_by(string=kwargs['username'])
 
-        user = self.storage.get_object(filter_id=details, model='user')
         try:
-            return self.storage.add_to_database(data=kwargs, model='user')
+            if user.__next__()['username'] == kwargs['username']:
+                yield f"<{kwargs['username']}>: already exists ): ):"
 
-        except Exception:
-            return user
+        except TypeError:
+            if self.storage.add_to_database(data=kwargs, model='user'):
+                yield f"User {kwargs['username']} created successfully"
+
+            else:
+                yield "A fatal error occurred"
+
+    def create_blog(self, **kwargs) -> Generator:
+        """Create blog to database
+        """
+
+        if self.storage.add_to_database(data=kwargs, model='blog'):
+            yield f"Blog {kwargs['title']} created successfully"
+
+        else:
+            yield f"Fatal error. Blog not created. ): "
 
     def __repr__(self) -> str:
         return "Authenticate yourself"

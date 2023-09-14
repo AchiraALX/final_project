@@ -30,20 +30,10 @@ class Blog(Base):
         nullable=False,
         default=None
     )
-    business_name: Mapped[str] = mapped_column(
-        ForeignKey('business.name'),
-        nullable=False,
-        default=None
-    )
 
     # Relationships
     user_blogs = relationship(
         'User',
-        back_populates='blogs',
-    )
-
-    business_blogs = relationship(
-        'Business',
         back_populates='blogs',
     )
 

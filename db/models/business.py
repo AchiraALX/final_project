@@ -31,13 +31,6 @@ class Business(Base):
         nullable=False
     )
 
-    # Relationships
-    blogs: Mapped[str] = relationship(
-        Blog,
-        back_populates='business_blogs',
-        uselist=True,
-    )
-
     user_business = relationship(
         'User',
         back_populates='business',

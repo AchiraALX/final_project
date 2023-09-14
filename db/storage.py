@@ -26,6 +26,7 @@ class Storage:
     def __init__(self, database: str) -> None:
         self.__engine = create_engine(f"sqlite:///db/{database}.sqlite3")
 
+        # Base.metadata.drop_all(self.__engine)
         Base.metadata.create_all(self.__engine)
 
         self.__session = Session(bind=self.__engine)
@@ -53,6 +54,17 @@ class Storage:
         if obj is not None:
             session.add(obj)
             session.commit()
+
+        return obj
+
+    def update_object(self, obj: Blog | User) -> Blog | User:
+        """Update object in the db
+        """
+
+        session = self.new_session
+        session.add(obj)
+        session.flush()
+        session.commit()
 
         return obj
 
