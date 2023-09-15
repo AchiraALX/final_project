@@ -129,6 +129,8 @@ async def add_blog():
     """Add a blog to a database
     """
 
+    auth = Auth()
+
     title = (await request.form).get('title')
     content = (await request.form).get('content')
     author = (await request.form).get('author')
@@ -139,7 +141,7 @@ async def add_blog():
         'author': author
     }
 
-    return Auth().create_blog(**details)
+    return auth.create_blog(**details)
 
 
 # Get a blog
