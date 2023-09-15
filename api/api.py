@@ -71,10 +71,12 @@ async def user_update(key: str) -> str:
 
     username = (await request.form).get('username')
     email = (await request.form).get('email')
+    password = (await request.form).get('password')
 
     data = {
         'username': username,
-        'email': email
+        'email': email,
+        'password': password,
     }
 
     if not key:

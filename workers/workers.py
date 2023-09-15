@@ -9,6 +9,7 @@ from db.models.blog import Blog
 
 from typing import Generator
 from sqlalchemy.exc import NoResultFound
+from bcrypt import hashpw, gensalt
 
 
 def _sum(a: int | float, b: int | float) -> int | float:
@@ -20,6 +21,14 @@ def _sum(a: int | float, b: int | float) -> int | float:
 
     return a + b
 
+
+def _generate_hash_password(string_password: str) -> str:
+    """Generate hash representation of the password
+    """
+
+    encoded = hashpw(string_password.encode('utf-8'), gensalt())
+
+    return encoded.decode('utf-8')
 
 # ----------------------------------------------------------------------------
 #
@@ -86,6 +95,33 @@ def get_user_by(string: str) -> Generator:
     yield f"No user with the email specified parameter: {string}"
 
 
+def update_user(data: dict, id: str) -> bool:
+    """Update user that match the specified key
+    """
+
+    if data.get('password') is not None:
+        data['password'] = _generate_hash_password(data['password'])
+
+    session = Storage('test').new_session
+    user = session.query(User).filter_by(id=id).first()
+
+    exceptions = ['password_reset_token', 'session_token']
+
+    if user is not None:
+        for key, val in data.items():
+            if val is not None:
+                setattr(user, key, val)
+
+            else:
+                if key in exceptions:
+                    setattr(user, key, val)
+            session.commit()
+
+        return True
+
+    return False
+
+
 def remove_user_self(id: str) -> bool:
     """Delete a user from the database
 
@@ -103,23 +139,6 @@ def remove_user_self(id: str) -> bool:
         session.delete(user)
         session.commit()
         session.close()
-
-        return True
-
-    return False
-
-
-def update_user(data: dict, id: str) -> bool:
-    """Update user that match the specified key
-    """
-
-    session = Storage('test').new_session
-    user = session.query(User).filter_by(id=id).first()
-
-    if user is not None:
-        for key, val in data.items():
-            setattr(user, key, val)
-            session.commit()
 
         return True
 
@@ -211,7 +230,7 @@ def remove_blog_self(id: str) -> bool:
     if blog is not None:
         session.delete(blog)
         session.commit()
-
+        session.close()
         return True
 
     return False
@@ -231,8 +250,11 @@ def update_blog(data: dict, id: str) -> bool:
     blog = session.query(Blog).filter_by(id=id).first()
     if blog is not None:
         for key, val in data.items():
-            setattr(blog, key, val)
+            if val is not None:
+                setattr(blog, key, val)
             session.commit()
+
+        session.close()
 
         return True
 

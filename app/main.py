@@ -42,11 +42,11 @@ async def chat_me() -> str:
 
 
 @chat.errorhandler(500)
-async def server_error(error) -> str | int:
+async def server_error(error) -> tuple[str, int]:
     """Internal server error handler
     """
 
-    return await render_template("500.html", error=error, title=500)
+    return f"{error}", 500
 
 
 @chat.errorhandler(404)
@@ -58,8 +58,8 @@ async def not_found_error(error) -> str:
 
 
 @chat.errorhandler(405)
-async def method_not_allowed(error):
+async def method_not_allowed(error) -> tuple[str, int]:
     """Not allowed method handling
     """
 
-    return {'res': '405'}
+    return f"{error}", 405
