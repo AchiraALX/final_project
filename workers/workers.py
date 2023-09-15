@@ -102,6 +102,7 @@ def remove_user_self(id: str) -> bool:
     if user is not None:
         session.delete(user)
         session.commit()
+        session.close()
 
         return True
 
