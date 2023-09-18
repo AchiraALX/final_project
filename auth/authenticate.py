@@ -85,7 +85,7 @@ class Auth:
         else:
             yield f"Fatal error. Blog not created. ): "
 
-    def login(self, username: str, password: str) -> bool:
+    def login(self, username: str, password: str) -> str | bool | None:
         """Logs a user into a new session
         """
 
@@ -93,10 +93,9 @@ class Auth:
             User).filter_by(username=username).first()
         if user is not None:
             if _match_keys(user.password, password):
-                self.session.create_user_session(username=username)
-                return True
+                return self.session.create_user_session(username=username)
 
-        return False
+        return None
 
     def logout(self, token: str) -> bool:
         """Log user out of the session

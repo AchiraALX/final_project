@@ -28,7 +28,7 @@ async def api_main():
     """API Home
     """
 
-    return await render_template('api.html')
+    return await render_template('api.html', title='API')
 
 
 @api.route('/user/<username>', strict_slashes=False, methods=['GET'])

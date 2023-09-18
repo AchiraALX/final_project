@@ -15,3 +15,16 @@ html {
     margin: 0%;
     background-color: var(--background-color);
 }
+
+main {
+    flex: 1 0 auto;
+}
+
+::-webkit-scrollbar {
+    width: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--bold-color);
+    border-radius: 3px;
+}

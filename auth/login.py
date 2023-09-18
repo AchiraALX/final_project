@@ -39,14 +39,9 @@ async def logged_in():
 
     if password is not None and username is not None:
         auth = Auth()
-        if auth.login(username=username, password=password):
-            storage = Storage('test').new_session
-            user = storage.query(User).filter_by(username=username).first()
-            if user is not None:
-                response = await make_response(f"Logged in at: {user.session_token}")
-                response.set_cookie('session', user.session_token)
-
-                return response
+        token = auth.login(username=username, password=password)
+        if token is not None:
+            return f"Logged in at:\n << {token} >>"
 
     return f"Failed to log in {username} with key: {password}"
 

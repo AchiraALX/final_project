@@ -20,6 +20,12 @@
         Chat - Embedded
         {% endif %}
     </title>
+
+    {% if title %}
+    {% if title == 'API' %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/api.css') }}">
+    {% endif %}
+    {% endif %}
 </head>
 
 <header>

@@ -1,13 +1,159 @@
 {% extends 'base.html' %}
 
 {% block header %}
-I am the header of the api
+<header>
+    <img src="your-company-logo.png" alt="Company Logo">
+    <h1>API Documentation </h1>
+</header>
 {% endblock %}
 
 {% block content %}
-Endpoint description will go here
+<nav>
+    <ul>
+        <li><a href="#chat-endpoints">Chat Endpoints</a></li>
+        <li><a href="#auth-endpoints">Auth Endpoints</a></li>
+        <li><a href="#chat-users">Chat Users</a></li>
+        <li><a href="#api-endpoints">API Endpoints</a></li>
+    </ul>
+</nav>
+
+<section id="chat-endpoints">
+    <h2>Chat Endpoints</h2>
+    <table>
+        <tr>
+            <th>Endpoint</th>
+            <th>Methods</th>
+            <th>Purpose</th>
+        </tr>
+        <tr>
+            <td>/</td>
+            <td>GET</td>
+            <td>Gets the blog home page</td>
+        </tr>
+    </table>
+</section>
+
+<section id="auth-endpoints">
+    <h2>Auth Endpoints</h2>
+    <table>
+        <tr>
+            <th>Endpoint</th>
+            <th>Methods</th>
+            <th>Purpose</th>
+        </tr>
+        <tr>
+            <td>/</td>
+            <td>POST</td>
+            <td>Authenticates user for matching password and username</td>
+        </tr>
+        <tr>
+            <td>/auth/register</td>
+            <td>GET, POST</td>
+            <td>GET: Fetches the registration page<br>POST: Creates an account for new users</td>
+        </tr>
+        <tr>
+            <td>/auth/reset-password</td>
+            <td>GET</td>
+            <td>Initiates the password reset process</td>
+        </tr>
+        <tr>
+            <td>/auth/update-password/&lt;reset-token&gt;</td>
+            <td>PUT</td>
+            <td>Updates the user's password</td>
+        </tr>
+        <tr>
+            <td>/auth/login</td>
+            <td>GET, POST</td>
+            <td>GET: Gets the login page<br>POST: Logs in the user</td>
+        </tr>
+    </table>
+</section>
+
+<section id="chat-users">
+    <h2>Chat Users</h2>
+    <table>
+        <tr>
+            <th>Endpoint</th>
+            <th>Methods</th>
+            <th>Purpose</th>
+        </tr>
+        <tr>
+            <td>/chat/users</td>
+            <td>GET</td>
+            <td>Gets a list of all users available</td>
+        </tr>
+    </table>
+</section>
+
+<section id="api-endpoints">
+    <h2>API Endpoints</h2>
+    <table>
+        <tr>
+            <th>Endpoint</th>
+            <th>Methods</th>
+            <th>Purpose</th>
+        </tr>
+        <tr>
+            <td>/</td>
+            <td>GET</td>
+            <td>Gets API home page</td>
+        </tr>
+        <tr>
+            <td>/api/user/&lt;query&gt;</td>
+            <td>GET</td>
+            <td>Gets a single user that matches the specified query</td>
+        </tr>
+        <tr>
+            <td>/api/users/&lt;query&gt;</td>
+            <td>GET</td>
+            <td>Gets all users that match the specified query</td>
+        </tr>
+        <tr>
+            <td>/api/all-blogs</td>
+            <td>GET</td>
+            <td>Gets all blogs available</td>
+        </tr>
+        <tr>
+            <td>/api/add-blog</td>
+            <td>POST</td>
+            <td>Creates a new blog</td>
+        </tr>
+        <tr>
+            <td>/api/blog/&lt;query&gt;</td>
+            <td>GET</td>
+            <td>Gets all available blogs that match the specified query</td>
+        </tr>
+        <tr>
+            <td>/api/blog-update/&lt;key&gt;</td>
+            <td>PUT</td>
+            <td>Updates the blog that matches the key</td>
+        </tr>
+        <tr>
+            <td>/api/user-update/&lt;key&gt;</td>
+            <td>PUT</td>
+            <td>Updates a user that matches the specified (key)</td>
+        </tr>
+        <tr>
+            <td>/api/delete-blog/&lt;key&gt;</td>
+            <td>DELETE</td>
+            <td>Deletes a blog that matches the specified key</td>
+        </tr>
+        <tr>
+            <td>/api/destroy-user/&lt;key&gt;</td>
+            <td>DELETE</td>
+            <td>Deletes a user that matches the specified key</td>
+        </tr>
+    </table>
+</section>
 {% endblock %}
 
 {% block footer %}
-More info will go here
+<div id="api-foot">
+
+</div>
+<script>
+    document.getElementById('api-foot').innerHTML = `
+    &copy; ${new Date().getFullYear()} | All Rights Reserved
+    `
+</script>
 {% endblock %}

@@ -1,0 +1,82 @@
+/* Global Styles */
+body {
+    background-color: #333;
+    color: lightgreen;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: lightgreen;
+    text-decoration: none;
+}
+
+h1,
+h2,
+th {
+    color: green;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th,
+td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid lightgreen;
+}
+
+/* Header Styles */
+header {
+    background-color: #333;
+    color: green;
+    padding: 20px;
+    text-align: center;
+}
+
+header img {
+    max-width: 100px;
+}
+
+/* Navigation Styles */
+nav {
+    background-color: #222;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 15px;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+li {
+    margin: 0 20px;
+    font-size: 18px;
+}
+
+/* Section Styles */
+section {
+    background-color: #222;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #111;
+    color: lawngreen;
+    text-align: center;
+    padding: 20px 0;
+}

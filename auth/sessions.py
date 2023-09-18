@@ -27,7 +27,7 @@ class Session:
     def __init__(self) -> None:
         self.session = Storage('test').new_session
 
-    def create_user_session(self, username: str) -> bool:
+    def create_user_session(self, username: str) -> str | bool | None:
         """Create a new login session for the user
         """
 
@@ -40,9 +40,9 @@ class Session:
 
             update_user(data=data, id=user.id)
             self.session.close()
-            return True
+            return token
 
-        return False
+        return None
 
     def destroy_user_session(self, token: str) -> bool:
         """Destroys user in session with obj
