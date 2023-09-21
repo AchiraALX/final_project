@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auth Login</title>
+    <title>Update password</title>
     <style>
         * {
             box-sizing: border-box;
@@ -147,15 +147,15 @@
 
 <body>
     <div class="login-container">
-        <h1>Auth Login</h1>
-        <form action=" {{ url_for('login.logged_in') }} " method="post">
-            <input type="text" placeholder="Username" name="username" required>
+        <h1>Update Password</h1>
+        <form action=" {{ url_for('login.update_password') }} " method="put">
             <input type="password" placeholder="Password" name="password" required>
-            <input type="submit" value="Login">
+            <input type="password" placeholder="Confirm Password" name="confirm-password" id="confirm-password"
+                required>
+            <input type="submit" value="Continue">
         </form>
         <br><br>
-        <a class="register-link" href="{{ url_for('login.sign_up') }}">Register</a><br><br>
-        <a class="forgot-password-link" href="{{ url_for('login.initiate_reset_password') }}">Forgot Password</a>
+        <a class="register-link" href="{{ url_for('login.login_main') }}">Log in instead</a><br><br>
     </div>
 </body>
 

@@ -2,6 +2,7 @@
     box-sizing: border-box;
     transition-duration: .4s;
     color: lightgreen;
+    font-size: 14px;
     --bold-color: green;
     --background-color: #333;
 }
@@ -14,10 +15,12 @@ html {
     padding: 0;
     margin: 0%;
     background-color: var(--background-color);
+    font-family: 'Courier New', Courier, monospace;
 }
 
 main {
     flex: 1 0 auto;
+    margin: 0 auto;
 }
 
 ::-webkit-scrollbar {
@@ -27,4 +30,25 @@ main {
 ::-webkit-scrollbar-thumb {
     background-color: var(--bold-color);
     border-radius: 3px;
+}
+
+/* Header Styles */
+header {
+    color: #0F0;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 2;
+    height: 50px;
+}
+
+footer {
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }

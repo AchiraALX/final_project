@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Futuristic Chat</title>
+    <style>
+        /* Global Styles */
+        body {
+            background-color: #111;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Chat Container Styles */
+        .chat-container {
+            background-color: #222;
+            border-radius: 15px;
+            padding: 20px;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .chat-messages {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .chat-message {
+            color: lawngreen;
+            border-radius: 15px;
+            padding: 10px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            animation: fade-in 0.5s ease forwards;
+            /* Set maximum width to 80% */
+            align-self: flex-start;
+            /* Push sender messages to the left */
+        }
+
+        @keyframes fade-in {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .user-message {
+            text-align: right;
+            justify-content: flex-end;
+            align-self: flex-end;
+            /* Push receiver messages to the right */
+        }
+
+        /* Chat Header Styles */
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 2px solid #333;
+        }
+
+        .user-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: lightgreen;
+        }
+
+        .options-button {
+            background-color: transparent;
+            border: none;
+            color: lightgreen;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .options-button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Entry Widget Styles */
+        .entry-widget {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: transparent;
+            padding: 10px;
+            border-radius: 15px;
+            margin-top: 20px;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .entry-widget:hover {
+            background-color: #444;
+        }
+
+        .message-input {
+            flex: 1;
+            border: none;
+            background-color: transparent;
+            color: lightgreen;
+            font-size: 18px;
+            padding: 10px;
+            outline: none;
+            border-radius: 15px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .message-input::placeholder {
+            color: #888;
+        }
+
+        .send-button {
+            background-color: #006600;
+            border: none;
+            border-radius: 15px;
+            color: #fff;
+            font-size: 18px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .send-button:hover {
+            background-color: #005500;
+        }
+
+        /* Add these styles to your existing CSS */
+        #file-button {
+            background-color: transparent;
+            color: green;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        ::-webkit-scrollbar {
+            width: 1px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: lawngreen;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="chat-container">
+        <div class="chat-header">
+            <div class="user-name">John Doe</div>
+            <button class="options-button">&#8942;</button>
+        </div>
+        <div class="chat-messages">
+            <!-- Chat messages will appear here -->
+        </div>
+        <!-- Entry Widget -->
+        <div class="entry-widget">
+            <input type="file" id="file-input" style="display: none;">
+            <button id="file-button"> <i class="fas fa-file-pin"></i>
+            </button>
+            <input type="text" class="message-input" id="message-input" placeholder="Type a message...">
+            <button class="send-button" id="send-button">Send</button>
+        </div>
+    </section>
+
+    <script>
+        const messageInput = document.getElementById('message-input');
+        const sendButton = document.getElementById('send-button');
+        const chatMessages = document.querySelector('.chat-messages');
+        const fileInput = document.getElementById('file-input');
+        const fileButton = document.getElementById('file-button');
+
+        const socket = new WebSocket(`ws://${location.host}/tunnel/achira`)
+
+        // Function to create and append a new chat message
+        function appendMessage(message, isUser) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('chat-message');
+            if (isUser) {
+                messageElement.classList.add('user-message');
+            }
+            messageElement.textContent = message;
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll to the bottom
+        }
+
+        // Function to generate a random reply
+        function generateRandomReply() {
+            const replies = [
+                "I'm here to assist you.",
+                "Sure, go ahead and ask your question.",
+                "What can I help you with today?",
+                "Feel free to ask anything.",
+                "I'm listening. Ask away.",
+            ];
+            const randomIndex = Math.floor(Math.random() * replies.length);
+            return replies[randomIndex];
+        }
+
+        // Message event listener
+        socket.addEventListener('message', (event) => {
+            setTimeout(() => {
+                const reply = event.data;
+                appendMessage(reply, false)
+            }, 500)
+        })
+
+        // Event listener for sending messages
+        sendButton.addEventListener('click', () => {
+            const userMessage = messageInput.value.trim();
+            if (userMessage !== '') {
+                // Add user's message to the chat
+                appendMessage(userMessage, true);
+                socket.send(userMessage)
+
+                // Clear the input field
+                messageInput.value = null;
+            }
+        });
+
+        // Event listener for pressing Enter key to send messages
+        messageInput.addEventListener('keyup', (event) => {
+            if (event.key === 'Enter') {
+                sendButton.click(); // Simulate a click on the send button
+            }
+        });
+
+        // Event listener for clicking the "Select File" button
+        fileButton.addEventListener('click', () => {
+            fileInput.click(); // Trigger the file input when the button is clicked
+        });
+
+        // Event listener for when a file is selected
+        fileInput.addEventListener('change', () => {
+            const selectedFile = fileInput.files[0];
+            if (selectedFile) {
+                // You can handle the selected file here, e.g., send it to the server
+                console.log('Selected file:', selectedFile.name);
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -7,9 +7,10 @@ from db.storage import Storage
 from db.models.user import User
 from db.models.blog import Blog
 
-from typing import Generator
+from typing import Generator, AsyncGenerator
 from sqlalchemy.exc import NoResultFound
 from bcrypt import hashpw, gensalt
+import asyncio
 
 
 def _sum(a: int | float, b: int | float) -> int | float:
@@ -29,6 +30,39 @@ def _generate_hash_password(string_password: str) -> str:
     encoded = hashpw(string_password.encode('utf-8'), gensalt())
 
     return encoded.decode('utf-8')
+
+
+# ----------------------------------------------------------------------------
+#
+# ---------------------------- Broker ----------------------------------------
+#
+# ----------------------------------------------------------------------------
+
+class ChatBroker:
+    """Class with socket instances for connecting to sockets and
+    putting messages
+    """
+
+    def __init__(self) -> None:
+        self.connections = set()
+
+    async def put_message(self, message: str) -> None:
+        """Put message to a conversation"""
+        for connection in self.connections:
+            await connection.put(message)
+
+    async def subscribe(self) -> AsyncGenerator[str, None]:
+        """Subscribes a connection for receiving messages"""
+
+        connection = asyncio.Queue()
+        self.connections.add(connection)
+        try:
+            while True:
+                yield await connection.get()
+
+        finally:
+            self.connections.remove(connection)
+
 
 # ----------------------------------------------------------------------------
 #
@@ -93,6 +127,34 @@ def get_user_by(string: str) -> Generator:
             }
 
     yield f"No user with the email specified parameter: {string}"
+
+
+def get_user_by_session(session_id: str) -> Generator:
+    """Query user by session id
+    """
+
+    for user in all_users():
+        if user.session_token == session_id:
+            yield {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'session_token': user.session_token
+            }
+
+
+def get_user_by_reset_token(string: str) -> Generator:
+    """Get a user by the reset token
+    """
+
+    for user in all_users():
+        if user.password_reset_token == string:
+            yield {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'password_reset_token': user.password_reset_token
+            }
 
 
 def update_user(data: dict, id: str) -> bool:

@@ -26,7 +26,7 @@ async def chat_route_main():
     """Main route for the chats
     """
 
-    return await render_template("chat.html")
+    return await render_template("chat_home.html")
 
 
 @chat_route.route('/users', strict_slashes=False, methods=['GET'])

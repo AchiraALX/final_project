@@ -1,3 +1,3 @@
 document.addEventListener('DOMContentLoaded', function () {
-    alert('I am Jacob and I am scared of one thing')
+    alert('That whirl wind is not going anywhere')
 })

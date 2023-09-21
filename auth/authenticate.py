@@ -85,7 +85,7 @@ class Auth:
         else:
             yield f"Fatal error. Blog not created. ): "
 
-    def login(self, username: str, password: str) -> str | bool | None:
+    def login(self, username: str, password: str) -> str | None:
         """Logs a user into a new session
         """
 
@@ -97,17 +97,21 @@ class Auth:
 
         return None
 
-    def logout(self, token: str) -> bool:
+    def logout(self, token: str) -> str | None:
         """Log user out of the session
 
         Return:
             bool
         """
 
-        if self.session.destroy_user_session(token=token):
-            return True
+        user = self.session.destroy_user_session(token=token)
 
-        return False
+        print(user)
+
+        if user is not None:
+            return user
+
+        return None
 
     def reset_password(self, username: str) -> bool:
         """Initiates the password reset by adding reset_token to user
