@@ -20,9 +20,11 @@ from quart_cors import cors
 from secrets import token_hex
 from workers.workers import get_user_by_session
 
+
 chat = Quart(__name__)
 chat = cors(chat, allow_origin='*')
 chat.secret_key = str(token_hex(32))
+
 
 chat.register_blueprint(chat_route, url_prefix='/chat')
 chat.register_blueprint(api, url_prefix='/api')
@@ -64,7 +66,9 @@ async def auth():
 
     if session_token is not None and not session_token:
         print(session_token)
-        user = get_user_by_session(session_id=session_token).__next__()
+        user = get_user_by_session(
+            session_id=session_token
+        ).__next__()
         response.headers['Client'] = user['username']
         is_authenticated = True
 
