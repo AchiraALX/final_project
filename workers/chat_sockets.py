@@ -3,10 +3,11 @@
 """All sockets used live here
 """
 
-from quart import websocket, Blueprint, render_template
+from quart import websocket, Blueprint, render_template, request
 import asyncio
 
 from workers.workers import ChatBroker
+from workers.workers import get_user_by_session
 
 chat_broker = ChatBroker()
 
@@ -53,6 +54,18 @@ async def put_toa_achira() -> None:
         await task
 
 
-@socket.get('/hey')
-async def chat_achira():
-    return await render_template('chat_achira.html')
+@socket.get('/chat')
+async def chat_home():
+    session_cookie = request.cookies.get('session-token')
+
+    if session_cookie is None and not session_cookie:
+        return await render_template('login.html')
+
+    else:
+        try:
+            user = get_user_by_session(session_id=session_cookie).__next__()
+
+        except StopIteration:
+            user = None
+
+    return await render_template('chat_achira.html', user=user)

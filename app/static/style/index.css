@@ -34,7 +34,8 @@ main {
 
 /* Header Styles */
 header {
-    color: #0F0;
+    background-color: #333;
+    color: green;
     padding: 10px;
     display: flex;
     justify-content: space-between;
@@ -42,8 +43,7 @@ header {
     position: fixed;
     width: 100%;
     top: 0;
-    z-index: 2;
-    height: 50px;
+    transition: top 0.3s;
 }
 
 footer {

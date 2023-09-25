@@ -27,7 +27,6 @@ async def logged_in():
     """Return if user logged in
     """
 
-    print('Got the request. Processing ....')
     if request.method == 'POST':
         password = (await request.form).get('password')
         username = (await request.form).get('username')
@@ -38,7 +37,7 @@ async def logged_in():
             if token is not None:
                 expiration_time = datetime.utcnow() + timedelta(hours=48)
                 response = await make_response(
-                    redirect(url_for('chat_route.chat_route_main')))
+                    redirect(url_for('socket.chat_home')))
 
                 response.set_cookie('session-token', token,
                                     expires=expiration_time)
@@ -66,8 +65,6 @@ async def sign_up() -> str | object | None:
     """
 
     auth = Auth()
-
-    print('Got the request. Processing.....')
 
     if request.method == 'POST':
         username = (await request.form).get('username')

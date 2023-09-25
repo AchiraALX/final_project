@@ -55,44 +55,12 @@ async def add_custom_headers(response: Response):
     return response
 
 
-@chat.before_request
-async def auth():
-    """Authenticate using cookies
-    """
-
-    global is_authenticated
-
-    session_token = request.cookies.get('session-token')
-
-    if session_token is not None and not session_token:
-        print(session_token)
-        user = get_user_by_session(
-            session_id=session_token
-        ).__next__()
-        response.headers['Client'] = user['username']
-        is_authenticated = True
-
-    else:
-        user = None
-
-    request_uri = request.url
-
-    if 'chat' in request_uri and session_token is None:
-        print('Chat in requested resource')
-        return await render_template('login.html')
-
-
 @chat.route('/', strict_slashes=False)
 async def chat_me() -> str:
     """Main route/ home route
     """
 
-    global is_authenticated
-    if is_authenticated:
-
-        return await render_template("blog.html")
-    else:
-        return await render_template('login.html')
+    return await render_template("blog.html")
 
 
 @chat.errorhandler(500)

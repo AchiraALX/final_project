@@ -1,233 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog Template</title>
+{% block header %}
+<header>
+    <div id="logo">
+        <!-- Your logo here -->
+        <img src="logo.png" alt="Logo">
+    </div>
+    <div>
+        <a href="#" id="blog-info">Info</a>
+        <a href="#" id="user-profile">Profile</a>
+    </div>
+</header>
+{% endblock %}
+{% block content %}
 
-    <style>
-        * {
-            transition-duration: .4s;
-            font-family: 'Courier New', Courier, monospace;
-        }
+<main>
+    <div class="blog-post">
+        <h2 class="blog-title"><a href="#">My name is Jacob</a></h2>
+        <p>If I had a diamond heart. So here we are like we were two feet apart in different worlds
+            no need to say another word no I should leave but I don't wanna go just yet.
+        </p>
+    </div>
+    <div class="blog-post">
+        <h2 class="blog-title"><a href="#">Blog Post Title 2</a></h2>
+        <p>This is a brief description of the second blog post.</p>
+    </div>
+    <div class="blog-post">
+        <h2 class="blog-title"><a href="#">My name is Jacob</a></h2>
+        <p>If I had a diamond heart. So here we are like we were two feet apart in different worlds
+            no need to say another word no I should leave but I don't wanna go just yet.
+        </p>
+    </div>
+    <div class="blog-post">
+        <h2 class="blog-title"><a href="#">My name is Jacob</a></h2>
+        <p>If I had a diamond heart. So here we are like we were two feet apart in different worlds
+            no need to say another word no I should leave but I don't wanna go just yet.
+        </p>
+    </div>
+    <div class="blog-post">
+        <h2 class="blog-title"><a href="#">My name is Jacob</a></h2>
+        <p>If I had a diamond heart. So here we are like we were two feet apart in different worlds
+            no need to say another word no I should leave but I don't wanna go just yet.
+        </p>
+    </div>
+    <div class="blog-post">
+        <h2 class="blog-title"><a href="#">My name is Jacob</a></h2>
+        <p>If I had a diamond heart. So here we are like we were two feet apart in different worlds
+            no need to say another word no I should leave but I don't wanna go just yet.
+        </p>
+    </div>
+    <!-- Add more blog posts as needed -->
+</main>
+{% endblock %}
+{% block footer %}
 
-        body {
-            background-color: #333;
-            color: lightgreen;
-            font-size: 14px;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        header {
-            background-color: #333;
-            color: green;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            transition: top 0.3s;
-        }
-
-        main {
-            width: 85%;
-            margin: 0 auto;
-            margin-top: 80px;
-            padding: 15px;
-            border-radius: 5px;
-            flex: 1 0 auto;
-        }
-
-        #logo {
-            margin: 10px;
-        }
-
-        #user-profile,
-        #blog-info {
-            background-color: darkgreen;
-            padding: 5px 10px;
-            margin-right: 10px;
-            border-radius: 5px;
-            text-decoration: none;
-            color: lightgreen;
-        }
-
-        #user-profile:hover,
-        #blog-info:hover {
-            background-color: forestgreen;
-        }
-
-        .blog-title a {
-            text-decoration: none;
-            color: green;
-            font-weight: bold;
-        }
-
-        .blog-content {
-            margin-top: 20px;
-            letter-spacing: 1px;
-        }
-
-        .related-posts {
-            border-radius: 5px;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-in-out;
-        }
-
-        .expand-button {
-            cursor: pointer;
-            text-align: center;
-            color: green;
-            margin-top: 50px;
-            border-radius: 5px;
-            padding: 10px;
-        }
-
-        .expand-button:hover {
-            background-color: forestgreen;
-            color: lawngreen;
-        }
-
-
-
-        .copyright {
-            font-size: 12px;
-        }
-
-        .social-media {
-            margin-top: 10px;
-        }
-
-        .blog-post {
-            margin-bottom: 20px;
-            padding: 10px;
-            border-radius: 5px;
-        }
-
-        .blog-title a {
-            text-decoration: none;
-            color: green;
-            font-weight: bold;
-        }
-
-        .copyright {
-            font-size: 12px;
-        }
-
-        .social-media {
-            margin-top: 10px;
-        }
-
-        a {
-            text-decoration: none;
-            color: green;
-        }
-
-        ::-webkit-scrollbar {
-            width: 1px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background-color: lawngreen;
-        }
-
-        footer {
-            background-color: #333;
-            color: lightgreen;
-            padding: 10px;
-            text-align: center;
-            margin-top: 50px;
-        }
-
-        @media only screen and (max-width: 800px) {
-            main {
-                width: 100%;
-            }
-        }
-    </style>
-</head>
-
-<body>
-    <header>
-        <div id="logo">
-            <!-- Your logo here -->
-            <img src="logo.png" alt="Logo">
-        </div>
-        <div>
-            <a href="#" id="user-profile">User Profile</a>
-            <a href="#" id="blog-info">Blog Info</a>
-        </div>
-    </header>
-    <main>
-        <div class="blog-post">
-            <h2 class="blog-title"><a href="#">My name is Jacob</a></h2>
-            <p>If I had a diamond heart. So here we are like we were two feet apart in different worlds
-                no need to say another word no I should leave but I don't wanna go just yet.
-            </p>
-        </div>
-        <div class="blog-post">
-            <h2 class="blog-title"><a href="#">Blog Post Title 2</a></h2>
-            <p>This is a brief description of the second blog post.</p>
-        </div>
-        <div class="blog-post">
-            <h2 class="blog-title"><a href="#">My name is Jacob</a></h2>
-            <p>If I had a diamond heart. So here we are like we were two feet apart in different worlds
-                no need to say another word no I should leave but I don't wanna go just yet.
-            </p>
-        </div>
-        <div class="blog-post">
-            <h2 class="blog-title"><a href="#">My name is Jacob</a></h2>
-            <p>If I had a diamond heart. So here we are like we were two feet apart in different worlds
-                no need to say another word no I should leave but I don't wanna go just yet.
-            </p>
-        </div>
-        <div class="blog-post">
-            <h2 class="blog-title"><a href="#">My name is Jacob</a></h2>
-            <p>If I had a diamond heart. So here we are like we were two feet apart in different worlds
-                no need to say another word no I should leave but I don't wanna go just yet.
-            </p>
-        </div>
-        <div class="blog-post">
-            <h2 class="blog-title"><a href="#">My name is Jacob</a></h2>
-            <p>If I had a diamond heart. So here we are like we were two feet apart in different worlds
-                no need to say another word no I should leave but I don't wanna go just yet.
-            </p>
-        </div>
-        <!-- Add more blog posts as needed -->
-    </main>
-    <footer>
-        <p class="copyright">&copy; 2023 Achira. All rights reserved.</p>
-        <div class="social-media">
-            <!-- Add your social media links/icons here -->
-            <a href="#"><img src="facebook.png" alt="Facebook"></a>
-            <a href="#"><img src="twitter.png" alt="Twitter"></a>
-            <a href="#"><img src="instagram.png" alt="Instagram"></a>
-        </div>
-    </footer>
-
-    <script>
-        // JavaScript to toggle the header on scroll
-        let prevScrollPos = window.pageYOffset;
-
-        window.onscroll = function () {
-            let currentScrollPos = window.pageYOffset;
-            if (prevScrollPos > currentScrollPos) {
-                document.querySelector("header").style.top = "0";
-            } else {
-                document.querySelector("header").style.top = "-70px"; // Adjust the height of the header
-            }
-            prevScrollPos = currentScrollPos;
-        }
-    </script>
-</body>
-
-</html>
+<div id="copyright">
+</div>
+<script>
+    document.getElementById('copyright').innerHTML = `
+        &copy; ${new Date().getFullYear()} Achira. All rights reserved`
+</script>
+<div class="social-media">
+    <!-- Add your social media links/icons here -->
+    <a href="#"><img src="facebook.png" alt="Facebook"></a>
+    <a href="#"><img src="twitter.png" alt="Twitter"></a>
+    <a href="#"><img src="instagram.png" alt="Instagram"></a>
+</div>
+{% endblock %}

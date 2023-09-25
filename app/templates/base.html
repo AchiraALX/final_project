@@ -12,7 +12,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <link rel="stylesheet" href="{{ url_for('static', filename='style/index5.css') }}">
-    <script src="{{ url_for('static', filename='scripts/chat.js') }}"></script>
     <title>
         {% if title %}
         {{ title }}
@@ -26,6 +25,175 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style/api.css') }}">
     {% endif %}
     {% endif %}
+
+    <style>
+        * {
+            box-sizing: border-box;
+            transition-duration: .4s;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        html,
+        body {
+            background-color: #333;
+        }
+
+        body {
+            background-color: #333;
+            color: lightgreen;
+            font-size: 14px;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #333;
+            color: green;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            transition: top 0.3s;
+        }
+
+        main {
+            margin: 0 auto;
+            padding: 15px;
+            border-radius: 5px;
+            flex: 1 0 auto;
+        }
+
+        #logo {
+            margin: 10px;
+        }
+
+        #user-profile,
+        #blog-info {
+            background-color: darkgreen;
+            padding: 5px 10px;
+            margin-right: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: lightgreen;
+        }
+
+        #user-profile:hover,
+        #blog-info:hover {
+            background-color: forestgreen;
+        }
+
+        #blog {
+            text-align: center;
+            padding: 30px 0 15px 0;
+            font-size: 30px;
+            background-image: linear-gradient(135deg, #333 0% 20%,
+                    #666 20% 40%,
+                    #999 40% 60%,
+                    #666 60% 80%,
+                    #333 80% 100%);
+            color: green;
+        }
+
+        .blog-title a {
+            text-decoration: none;
+            color: green;
+            font-weight: bold;
+        }
+
+        .blog-content {
+            margin-top: 20px;
+            letter-spacing: 1px;
+        }
+
+        .related-posts {
+            border-radius: 5px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+
+        .expand-button {
+            cursor: pointer;
+            text-align: center;
+            color: green;
+            margin-top: 50px;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .expand-button:hover {
+            background-color: forestgreen;
+            color: lawngreen;
+        }
+
+
+
+        .copyright {
+            font-size: 12px;
+        }
+
+        .social-media {
+            margin-top: 10px;
+        }
+
+        .blog-post {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .blog-title a {
+            text-decoration: none;
+            color: green;
+            font-weight: bold;
+        }
+
+        .copyright {
+            font-size: 12px;
+        }
+
+        .social-media {
+            margin-top: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            color: green;
+        }
+
+        @media only screen and (max-width: 800px) {
+            main {
+                width: 100%;
+            }
+        }
+
+        footer {
+            display: flex;
+            flex-direction: row;
+        }
+
+        footer>div {
+            flex: 1;
+            text-align: center;
+        }
+
+        ::-webkit-scrollbar {
+            width: 3px;
+            background-color: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: lawngreen;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 
 <header>
