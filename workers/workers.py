@@ -277,6 +277,26 @@ def get_blog_by(string: str) -> Generator:
     yield f"No result for: {string}"
 
 
+def get_blog_by_id(string_id: str) -> Generator:
+    """Get a blog by its id
+
+    Return:
+        Generator[str, str, str]
+
+    Usage:
+        get_blog_by_id(string_id) -> where string_id is the id of the blog
+
+    """
+
+    for blog in all_blogs():
+        if blog.id == string_id:
+            yield {
+                'author': blog.author,
+                'title': blog.title,
+                'content': blog.content
+            }
+
+
 def remove_blog_self(id: str) -> bool:
     """Delete a blog from the database
 

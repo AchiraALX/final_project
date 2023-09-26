@@ -20,6 +20,8 @@ from quart_cors import cors
 from secrets import token_hex
 from workers.workers import get_user_by_session
 
+import requests
+
 
 chat = Quart(__name__)
 chat = cors(chat, allow_origin='*')

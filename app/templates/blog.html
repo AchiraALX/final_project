@@ -13,52 +13,71 @@
 </header>
 {% endblock %}
 {% block content %}
+<script>
+    const blogUri = `/api/all-blogs`;
+    const main = document.querySelector('main');
 
-<main>
-    <div class="blog-post">
-        <h2 class="blog-title"><a href="#">My name is Jacob</a></h2>
-        <p>If I had a diamond heart. So here we are like we were two feet apart in different worlds
-            no need to say another word no I should leave but I don't wanna go just yet.
-        </p>
-    </div>
-    <div class="blog-post">
-        <h2 class="blog-title"><a href="#">Blog Post Title 2</a></h2>
-        <p>This is a brief description of the second blog post.</p>
-    </div>
-    <div class="blog-post">
-        <h2 class="blog-title"><a href="#">My name is Jacob</a></h2>
-        <p>If I had a diamond heart. So here we are like we were two feet apart in different worlds
-            no need to say another word no I should leave but I don't wanna go just yet.
-        </p>
-    </div>
-    <div class="blog-post">
-        <h2 class="blog-title"><a href="#">My name is Jacob</a></h2>
-        <p>If I had a diamond heart. So here we are like we were two feet apart in different worlds
-            no need to say another word no I should leave but I don't wanna go just yet.
-        </p>
-    </div>
-    <div class="blog-post">
-        <h2 class="blog-title"><a href="#">My name is Jacob</a></h2>
-        <p>If I had a diamond heart. So here we are like we were two feet apart in different worlds
-            no need to say another word no I should leave but I don't wanna go just yet.
-        </p>
-    </div>
-    <div class="blog-post">
-        <h2 class="blog-title"><a href="#">My name is Jacob</a></h2>
-        <p>If I had a diamond heart. So here we are like we were two feet apart in different worlds
-            no need to say another word no I should leave but I don't wanna go just yet.
-        </p>
-    </div>
-    <!-- Add more blog posts as needed -->
-</main>
+    fetch(blogUri)
+        .then((response) => response.json())
+        .then((data) => {
+            data.forEach((blog) => {
+                const div = document.createElement('div');
+                div.classList.add('blog-cont')
+                div.innerHTML = `<div class="blog-post">
+            <h2 class="blog-title" data-blog='${blog.id}'>${blog.title}</h2>
+              <p>${blog.content}</p>
+            </div>`
+                main.appendChild(div);
+            })
+        })
+        .then(function () {
+            const linkTitles = document.querySelectorAll('.blog-title');
+            const blogs = document.querySelectorAll('.blog-cont');
+            const main = document.querySelector('main');
+
+            let blogListState = null;
+
+            linkTitles.forEach((linkTitle) => {
+                linkTitle.addEventListener('click', (event) => {
+                    if (event.target === linkTitle) {
+                        const blogId = linkTitle.dataset.blog;
+
+                        const blog = oneBlog(blogId)
+
+                        blog
+                            .then(alert(blog))
+                    }
+                })
+            })
+        })
+        .catch((error) => alert('Something went wrong'))
+
+    const oneBlog = (blogId) => {
+        const blogUri = `/api/blogged/${blogId}`
+        const main = document.querySelector('main')
+
+        fetch(blogUri)
+            .then((response) => response.json())
+            .then((data) => {
+
+                const house_body = document.createElement('div');
+                const house_head = document.createElement('div');
+                const house_author = document.createElement('span')
+                blog = JSON.stringify(data)
+            })
+            .catch((error) => console.log(error))
+    };
+</script>
 {% endblock %}
 {% block footer %}
 
-<div id="copyright">
+<div id="copyright" data-blog="ready">
 </div>
 <script>
     document.getElementById('copyright').innerHTML = `
         &copy; ${new Date().getFullYear()} Achira. All rights reserved`
+
+    alert(document.getElementById('copyright').dataset.blog)
 </script>
 <div class="social-media">
     <!-- Add your social media links/icons here -->

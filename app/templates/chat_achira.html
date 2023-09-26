@@ -17,7 +17,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 97vh;
+
         }
 
         /* Chat Container Styles */
@@ -33,6 +34,7 @@
         .chat-messages {
             height: 100%;
             background-color: transparent;
+            border: 1px solid lawngreen;
         }
 
         .chat-message {
@@ -90,15 +92,6 @@
             transform: scale(1.1);
         }
 
-        #body-entry {
-            display: flex;
-            flex-direction: column;
-        }
-
-        #body-entry>div:first-child {
-            flex: 1 0 auto;
-        }
-
         /* Entry Widget Styles */
         .entry-widget {
             display: flex;
@@ -108,10 +101,6 @@
             padding: 10px;
             border-radius: 15px;
             margin-top: 20px;
-            transition: background-color 0.3s ease-in-out;
-        }
-
-        .entry-widget:hover {
             background-color: #444;
         }
 
@@ -170,7 +159,7 @@
 
 <body>
     <section class="chats">
-        I am the list of chats
+
     </section>
     <section class="chat-container">
         <div class="chat-header">

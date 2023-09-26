@@ -13,7 +13,8 @@ from workers.workers import (
     remove_blog_self,
     update_user,
     update_blog,
-    all_blogs
+    all_blogs,
+    get_blog_by_id
 )
 from auth.authenticate import Auth
 
@@ -117,6 +118,7 @@ async def get_all_blogs() -> list:
     """
 
     return [{
+        'id': blog.id,
         'author': blog.author,
         'title': blog.title,
         'content': blog.content
@@ -155,6 +157,20 @@ async def get_blog(query: str = '') -> dict:
         query = (await request.form).get('query').__str__()
 
     return get_blog_by(string=query).__next__()
+
+
+# Ge blog by id
+@api.get('blogged/<id>')
+async def get_one_blog(id: str):
+    '''Retrieve one blog by id'''
+
+    try:
+        blog = get_blog_by_id(string_id=id).__next__()
+
+    except StopIteration:
+        return 'Max iteration reached'
+
+    return blog
 
 
 # Get blogs with matching query
