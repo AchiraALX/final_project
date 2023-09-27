@@ -291,7 +291,7 @@ def get_blog_by_id(string_id: str) -> Generator:
     for blog in all_blogs():
         if blog.id == string_id:
             yield {
-                'author': blog.author,
+                'author': str(blog.author).capitalize(),
                 'title': blog.title,
                 'content': blog.content
             }

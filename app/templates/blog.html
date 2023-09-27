@@ -7,8 +7,12 @@
         <img src="logo.png" alt="Logo">
     </div>
     <div>
-        <a href="#" id="blog-info">Info</a>
+        <a href="#" id="blog-info" title="Info page">Info</a>
+        {% if authenticated %}
         <a href="#" id="user-profile">Profile</a>
+        {% else %}
+        <a href="{{ url_for('login.logged_in') }}" id="user-profile" class="my-prof">Login</a>
+        {% endif %}
     </div>
 </header>
 {% endblock %}
@@ -35,20 +39,26 @@
             const blogs = document.querySelectorAll('.blog-cont');
             const main = document.querySelector('main');
 
-            let blogListState = null;
-
             linkTitles.forEach((linkTitle) => {
                 linkTitle.addEventListener('click', (event) => {
                     if (event.target === linkTitle) {
                         const blogId = linkTitle.dataset.blog;
 
-                        const blog = oneBlog(blogId)
-
-                        blog
-                            .then(alert(blog))
+                        oneBlog(blogId)
                     }
                 })
             })
+
+            const addButton = document.createElement('div');
+
+            addButton.classList.add('add-blog')
+            addButton.innerHTML = '&plus;';
+
+            main.append(addButton)
+
+            addButton.onclick = (event) => {
+                addBlog();
+            }
         })
         .catch((error) => alert('Something went wrong'))
 
@@ -60,24 +70,142 @@
             .then((response) => response.json())
             .then((data) => {
 
+                const blur = document.createElement('div')
+                const container = document.createElement('div');
+
+                blur.classList.add('blur')
+                container.classList.add('blog-container');
+
+                blur.onclick = (event) => {
+                    if (event.target === blur) {
+                        blur.remove()
+                    }
+                }
+
                 const house_body = document.createElement('div');
                 const house_head = document.createElement('div');
-                const house_author = document.createElement('span')
-                blog = JSON.stringify(data)
+                const house_author = document.createElement('div');
+                const house_title = document.createElement('h2');
+                const house_delete = document.createElement('button');
+                const house_update = document.createElement('button');
+
+                house_update.textContent = 'Update';
+                house_delete.textContent = 'Delete';
+
+                house_delete.classList.add('delete');
+                house_update.classList.add('update');
+
+                house_title.textContent = data.title;
+                house_author.textContent = data.author;
+                house_body.textContent = data.content;
+
+                house_head.appendChild(house_title);
+                house_head.appendChild(house_author);
+                house_head.appendChild(house_delete);
+                house_head.appendChild(house_update);
+
+                house_head.classList.add('house-header');
+
+                main.appendChild(blur);
+                blur.appendChild(container);
+
+                container.appendChild(house_head);
+                container.appendChild(house_body);
             })
             .catch((error) => console.log(error))
+    };
+
+    const addBlog = () => {
+        const flexBox = document.createElement('div');
+        const container = document.createElement('div');
+
+        flexBox.classList.add('blur');
+        container.classList.add('blog-container');
+
+
+        const titleEntry = document.createElement('div');
+        const contentEntry = document.createElement('div');
+        const submit = document.createElement('button')
+
+        titleEntry.textContent = 'Title...';
+        contentEntry.textContent = 'Text only...';
+        submit.textContent = 'Submit';
+
+        container.appendChild(titleEntry);
+        container.appendChild(contentEntry);
+        container.appendChild(submit)
+
+        container.style.textAlign = 'center';
+        submit.classList.add('submit-blog');
+
+        titleEntry.contentEditable = true;
+        contentEntry.contentEditable = true;
+
+        titleEntry.classList.add('title-entry');
+        contentEntry.classList.add('content-entry');
+
+        flexBox.appendChild(container)
+
+        document.querySelector('main').appendChild(flexBox);
+
+
+        flexBox.onclick = (event) => {
+            if (event.target === flexBox) {
+                flexBox.remove();
+            }
+        };
+
+        submit.addEventListener('click', (event) => {
+            if (event.target === submit) {
+                submitBlog();
+            }
+        });
+    };
+
+
+    const submitBlog = () => {
+        const title = document.querySelector('.title-entry');
+        const content = document.querySelector('.content-entry');
+
+        if (title.innerText.length < 30 || content.innerText.length < 100) {
+            alert('Under content. Add more...');
+        } else {
+            const uri = `/api/author`;
+
+            fetch(uri)
+                .then((response) => response.json())
+                .then((data) => {
+                    if (checkForLoggedIn()) {
+                        alert(JSON.stringify(data))
+                    } else {
+                        alert('Unable to determine the curren user.')
+                    }
+                })
+
+                .catch((error) => {
+                    alert('Some error occurred');
+                })
+        }
+    }
+
+    const checkForLoggedIn = () => {
+        const prof = document.querySelector('.my-prof');
+
+        if (prof) {
+            alert('present')
+        } else {
+            alert('absent');
+        }
     };
 </script>
 {% endblock %}
 {% block footer %}
 
-<div id="copyright" data-blog="ready">
+<div id="copyright">
 </div>
 <script>
     document.getElementById('copyright').innerHTML = `
         &copy; ${new Date().getFullYear()} Achira. All rights reserved`
-
-    alert(document.getElementById('copyright').dataset.blog)
 </script>
 <div class="social-media">
     <!-- Add your social media links/icons here -->

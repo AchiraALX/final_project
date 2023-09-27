@@ -160,7 +160,7 @@ async def get_blog(query: str = '') -> dict:
 
 
 # Ge blog by id
-@api.get('blogged/<id>')
+@api.get('/blogged/<id>')
 async def get_one_blog(id: str):
     '''Retrieve one blog by id'''
 
@@ -171,6 +171,23 @@ async def get_one_blog(id: str):
         return 'Max iteration reached'
 
     return blog
+
+
+@api.get('/author')
+async def get_author():
+    '''Get user via the sess'''
+
+    session_cookie = request.cookies.get('session')
+
+    if not session_cookie or session_cookie is None:
+        return {
+            'cookie': None
+        }
+
+    else:
+        return {
+            'cookie': session_cookie
+        }
 
 
 # Get blogs with matching query

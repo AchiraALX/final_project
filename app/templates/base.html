@@ -102,7 +102,6 @@
         }
 
         .blog-cont {
-            border: 1px dashed lawngreen;
             min-width: 100%;
             margin-top: 5px;
         }
@@ -171,6 +170,125 @@
         a {
             text-decoration: none;
             color: green;
+        }
+
+        .blur {
+            position: fixed;
+            top: 0;
+            height: 100vh;
+            background-color: #333333cd;
+            z-index: 10;
+            width: 100%;
+        }
+
+        .blog-container {
+            background-color: #333;
+            position: absolute;
+            top: 5%;
+            left: 50%;
+            transform: translate(-50%);
+            width: 90%;
+            box-shadow: 0 0 2px 1px lawngreen;
+            border-radius: 10px;
+            padding: 15px;
+            animation: float .5s alternate;
+        }
+
+        .delete,
+        .update {
+            padding: 5px 20px;
+            margin: 10px 20px;
+            outline: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .delete {
+            color: green;
+            background-color: #999;
+        }
+
+        .update {
+            color: greenyellow;
+            background-color: #666;
+        }
+
+        @keyframes float {
+            0% {
+                top: 0%;
+            }
+
+            100% {
+                top: 5%;
+            }
+        }
+
+        .add-blog {
+            background-color: #333;
+            border: 1px dashed lawngreen;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            border-radius: 50%;
+            font-weight: 800;
+            font-size: 18px;
+            width: 27px;
+            height: 30px;
+            text-align: center;
+            cursor: pointer;
+            scale: 1.4;
+            padding: 5px 0;
+        }
+
+        h2 {
+            color: green;
+            cursor: pointer;
+        }
+
+
+        .house-header {
+            padding: 15px 0;
+            margin: 5px auto;
+        }
+
+        .title-entry,
+        .content-entry {
+            outline: none;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: justify;
+            margin: 10px auto;
+            overflow: auto;
+        }
+
+        .title-entry {
+            font-size: 25px;
+            font-weight: 800;
+            color: green;
+            background-color: #666;
+            height: 60px;
+            color: lightgreen;
+        }
+
+        .content-entry {
+            color: lawngreen;
+            background-color: #666;
+            font-size: 14px;
+            line-height: 30px;
+            height: 300px;
+        }
+
+        .submit-blog {
+            outline: none;
+            border: none;
+            padding: 10px 20px;
+            background-color: green;
+            color: lawngreen;
+            border-radius: 5px;
+            font-weight: 800;
+            cursor: pointer;
+            width: 300px;
         }
 
         @media only screen and (max-width: 800px) {

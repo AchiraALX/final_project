@@ -62,7 +62,12 @@ async def chat_me() -> str:
     """Main route/ home route
     """
 
-    return await render_template("blog.html")
+    session_token = request.cookies.get('session-token')
+
+    if session_token is None:
+        return await render_template("blog.html")
+
+    return await render_template('blog.html', authenticated=True)
 
 
 @chat.errorhandler(500)
