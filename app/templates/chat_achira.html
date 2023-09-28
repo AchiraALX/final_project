@@ -34,7 +34,6 @@
         .chat-messages {
             height: 100%;
             background-color: transparent;
-            border: 1px solid lawngreen;
         }
 
         .chat-message {
@@ -154,12 +153,55 @@
             background-color: lawngreen;
             border-radius: 3px;
         }
+
+        #search {
+            outline: none;
+            border: none;
+            background-color: transparent;
+            border: 1px dashed lawngreen;
+            color: lightgreen;
+            width: 100%;
+            padding: 15px 3px;
+            font-size: 14px;
+        }
+
+        #search::placeholder {
+            color: #005500;
+        }
+
+        .chats {
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        #username {
+            padding: 15px;
+            text-align: center;
+            font-weight: 800;
+        }
+
+        #chat-list {
+            padding: 15px 0;
+        }
     </style>
 </head>
 
 <body>
     <section class="chats">
-
+        <div id="username">
+            {% if user %}
+            {{ user.username.upper() }}
+            {% else %}
+            Anonymous
+            {% endif %}
+        </div>
+        <div id="search-contanct">
+            <input type="search" name="search" id="search" placeholder="Search ...">
+        </div>
+        <div id="chat-list">
+            List goes here
+        </div>
     </section>
     <section class="chat-container">
         <div class="chat-header">

@@ -54,6 +54,20 @@ async def put_toa_achira() -> None:
         await task
 
 
+@socket.websocket('/<name>')
+async def private_chat(name: str):
+    '''Chat private with another user.'''
+
+    task = asyncio.ensure_future(_receive())
+
+    try:
+        await websocket.send('Hello there gobi')
+
+    finally:
+        task.cancel()
+        await task
+
+
 @socket.get('/chat')
 async def chat_home():
     session_cookie = request.cookies.get('session-token')
