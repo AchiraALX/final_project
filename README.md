@@ -1,4 +1,4 @@
-# Chat Application
+# Chat Application { NOT COMPLETE YET }
 
 ## Overview
 
